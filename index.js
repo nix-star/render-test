@@ -6,12 +6,42 @@ const app = express()
 app.use(express.json())
 app.use(express.static('dist'))
 
+require('dotenv').config()
+const Note = require("./models/note")
+
+// const mongoose = require('mongoose')
+
+// // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+// const password = process.argv[2]
+// const url = `mongodb+srv://mongodb_user:${password}@cluster0.ztaxwcn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+
+// mongoose.set('strictQuery',false)
+// mongoose.connect(url, { family: 4 })
+
+// const noteSchema = new mongoose.Schema({
+//   content: String,
+//   important: Boolean,
+// })
+
+// noteSchema.set('toJSON', {
+//   transform: (document, returnedObject) => {
+//     returnedObject.id = returnedObject._id.toString()
+//     delete returnedObject._id
+//     delete returnedObject.__v
+//   }
+// })
+
+// const Note = mongoose.model('Note', noteSchema)
+
+
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/notes', (request, response) => {
-  response.json(notes)
+  Note.find({}).then(notes => {
+    response.json(notes)
+  })
 })
 
 app.get('/api/notes/:id', (request, response) => {
@@ -53,7 +83,7 @@ app.post('/api/notes', (request, response) => {
   response.json(note)
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
