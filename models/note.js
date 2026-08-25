@@ -4,7 +4,10 @@ mongoose.set('strictQuery', false)
 
 const url = process.env.MONGODB_URI
 
-console.log('connecting to', url)
+if (!url) {
+  throw new Error('MONGODB_URI is not defined')
+}
+
 mongoose.connect(url, { family: 4 })
   .then(result => {
     console.log('connected to MongoDB')
