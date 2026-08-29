@@ -88,9 +88,9 @@ app.put('/api/notes/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-const PORT = process.env.PORT
+//const PORT = process.env.PORT
 
-app.listen(PORT, () => {
+app.listen(config.PORT, () => {
   logger.info(`Server running on port ${config.PORT}`)
 })
 
