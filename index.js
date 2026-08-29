@@ -1,4 +1,4 @@
-//require('dotenv').config()
+require('dotenv').config()
 
 const config = require('./utils/config')
 const logger = require('./utils/logger')
