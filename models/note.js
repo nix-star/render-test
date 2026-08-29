@@ -1,16 +1,18 @@
 const mongoose = require('mongoose')
+const config = require('../utils/config')
+const logger = require('../utils/logger')
 
 mongoose.set('strictQuery', false)
 
-const url = process.env.MONGODB_URI
+const url = config.MONGODB_URI
 
 if (!url) {
   throw new Error('MONGODB_URI is not defined')
 }
 
 mongoose.connect(url, { family: 4 })
-  .then(console.log('connected to MongoDB'))
-  .catch(error => console.log('error connecting to MongoDB:', error.message))
+  .then(logger.info('connected to MongoDB'))
+  .catch(error => logger.info('error connecting to MongoDB:', error.message))
 
 const noteSchema = new mongoose.Schema({
   content: String,
